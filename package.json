@@ -1,0 +1,66 @@
+{
+  "name": "fennec-nestjs",
+  "version": "1.0.0",
+  "description": "Fennec module for Nestjs",
+  "author": "Davi Nomoeh Dani",
+  "license": "MIT",
+  "url": "https://github.com/mr687/fennec-nestjs#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mr687/fennec-nestjs"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "rimraf -rf dist && tsc -p tsconfig.json --watch",
+    "build": "rimraf -rf dist && tsc -p tsconfig.json",
+    "format": "prettier --write \"{lib,test}/**/*.ts\"",
+    "lint": "eslint 'lib/**/*.ts' --fix",
+    "prepublish:npm": "npm run build",
+    "publish:npm": "npm publish --access public",
+    "prepublish:next": "npm run build",
+    "publish:next": "npm publish --access public --tag next",
+    "test:integration": "jest --config ./tests/jest-e2e.json --runInBand",
+    "prerelease": "npm run build",
+    "release": "release-it"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.7.1",
+    "@commitlint/config-angular": "^17.7.0",
+    "@types/node": "^20",
+    "@typescript-eslint/eslint-plugin": "^6.5.0",
+    "@typescript-eslint/parser": "^6.5.0",
+    "eslint": "^8.48.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-import": "^2.28.1",
+    "husky": "^8.0.3",
+    "lint-staged": "^14.0.1",
+    "prettier": "^3.0.3",
+    "release-it": "^16.1.5",
+    "rimraf": "^5.0.1",
+    "typescript": "^5.2.2"
+  },
+  "peerDependencies": {
+    "rxjs": "^6.0.0 || ^7.0.0",
+    "reflect-metadata": "^0.1.12",
+    "@nestjs/common": "^7.0.0 || ^8.0.0 || ^9.0.0 || ^10.0.0"
+  },
+  "dependencies": {
+    "@nestjs/axios": "^3.0.0",
+    "axios": "^1.5.0"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "prettier --write"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -c .commitlintrc.json -E HUSKY_GIT_PARAMS",
+      "pre-commit": "lint-staged"
+    }
+  }
+}
