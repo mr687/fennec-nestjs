@@ -1,9 +1,13 @@
 import { HttpService } from '@nestjs/axios';
 import { Inject, Injectable } from '@nestjs/common';
 import { FENNEC_MODULE_OPTIONS } from './fennec.constants';
-import { FennecModuleOptions, SendOtpResponse } from './interfaces';
+import {
+  FennecModuleOptions,
+  SendCustomMessageRequest,
+  SendCustomMessageResponse,
+  SendOtpResponse,
+} from './interfaces';
 import { randomOtpCode } from './utils';
-import { catchError, firstValueFrom } from 'rxjs';
 import { AxiosError } from 'axios';
 
 @Injectable()
@@ -35,7 +39,35 @@ export class FennecService {
       })
       .subscribe({
         error: (err: AxiosError) => {
-          console.error('Fennec API Error', {
+          console.error('Fennec API Error:sendOtp', {
+            url: err.config?.url,
+            data: err.config?.data,
+            status: err.status,
+            message: err.message,
+          });
+        },
+      });
+    return 'OK';
+  }
+
+  async sendCustomMessage({
+    receiver,
+    content: contentText,
+  }: SendCustomMessageRequest) {
+    this.http
+      .post<SendCustomMessageResponse>(
+        this.FENNEC_ENDPOINTS.SEND_CUSTOM_MESSAGE,
+        {
+          sessionId: this.options.sessionId,
+          receiver: receiver,
+          content: {
+            text: contentText,
+          },
+        },
+      )
+      .subscribe({
+        error: (err: AxiosError) => {
+          console.error('Fennec API Error:sendCustomMessage', {
             url: err.config?.url,
             data: err.config?.data,
             status: err.status,

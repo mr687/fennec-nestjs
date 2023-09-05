@@ -13,7 +13,7 @@ export type FennecModuleOptions = {
   otp?: {
     /** OTP length */
     length?: number;
-  }
+  };
 };
 
 export interface FennecModuleOptionsFactory {

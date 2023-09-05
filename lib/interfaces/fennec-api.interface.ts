@@ -8,12 +8,7 @@ export type FennecApiResponse<TData = any> = {
 };
 
 export type FennecApiRequest = {
-  sessionId: string;
   receiver: string;
-};
-
-export type SendOtpRequest = FennecApiRequest & {
-  code: string;
 };
 
 export type SendOtpResponse = FennecApiResponse<{
@@ -24,7 +19,7 @@ export type SendOtpResponse = FennecApiResponse<{
 }>;
 
 export type SendCustomMessageRequest = FennecApiRequest & {
-  content: any;
+  content: string;
 };
 
 export type SendCustomMessageResponse = {
